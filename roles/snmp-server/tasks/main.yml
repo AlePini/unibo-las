@@ -25,15 +25,11 @@
   ansible.builtin.lineinfile:
     dest: /etc/snmp/snmpd.conf
     line: "rwcommunity supercom default -V all"
-    insertafter: '^rocommunity'
+    insertafter: "^rocommunity"
   notify: restart snmpd
 - name: Set sysLocation
   ansible.builtin.lineinfile:
     dest: /etc/snmp/snmpd.conf
     line: "sysLocation vagrant_{{ inventory_hostname }}"
-    regexp: '^sysLocation'
+    regexp: "^sysLocation"
   notify: restart snmpd
-# TODOS
-# view all included .1
-# rocommunity public default -V all
-# rwcommunity supercom default -V all
