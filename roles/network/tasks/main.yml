@@ -1,0 +1,14 @@
+---
+- name: Change allow-hotplug to auto
+  ansible.builtin.replace:
+    path: /etc/network/interfaces
+    regexp: "^allow-hotplug"
+    replace: "auto"
+  notify: restart networking
+- name: Copy configs
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/network/interfaces.d/"
+    validate: "/usr/sbin/ifup --no-act -i %s {{ item }}"
+  with_fileglob: "{{ inventory_hostname }}/eth*"
+  notify: restart networking

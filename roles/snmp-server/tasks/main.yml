@@ -1,0 +1,39 @@
+---
+- name: Install snpm daemon
+  ansible.builtin.apt:
+    name:
+      - snmpd
+- name: Enable request from outside
+  ansible.builtin.lineinfile:
+    dest: /etc/snmp/snmpd.conf
+    line: "agentaddress udp:161"
+    regexp: '^agentaddress\s+127'
+  notify: restart snmpd
+- name: Create view all
+  ansible.builtin.lineinfile:
+    dest: /etc/snmp/snmpd.conf
+    line: "view all included .1"
+    insertafter: '^view\s+systemonly'
+  notify: restart snmpd
+- name: Enable community public
+  ansible.builtin.lineinfile:
+    dest: /etc/snmp/snmpd.conf
+    line: "rocommunity public default -V all"
+    regexp: '^rocommunity\s+public default -V systemonly$'
+  notify: restart snmpd
+- name: Enable rwcommunity
+  ansible.builtin.lineinfile:
+    dest: /etc/snmp/snmpd.conf
+    line: "rwcommunity supercom default -V all"
+    insertafter: '^rocommunity'
+  notify: restart snmpd
+- name: Set sysLocation
+  ansible.builtin.lineinfile:
+    dest: /etc/snmp/snmpd.conf
+    line: "sysLocation vagrant_{{ inventory_hostname }}"
+    regexp: '^sysLocation'
+  notify: restart snmpd
+# TODOS
+# view all included .1
+# rocommunity public default -V all
+# rwcommunity supercom default -V all

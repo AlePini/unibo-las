@@ -1,0 +1,6 @@
+---
+- name: reload nscd
+  ansible.builtin.service:
+    name: nscd
+    state: restarted
+    enabled: yes

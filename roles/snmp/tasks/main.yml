@@ -1,0 +1,17 @@
+---
+- name: Enable non free repo
+  ansible.builtin.replace:
+    path: /etc/apt/sources.list
+    regexp: "^deb (.*) main$"
+    replace: 'deb \1 main contrib non-free'
+- name: Install snpm packages
+  ansible.builtin.apt:
+    name:
+      - snmp
+      - snmp-mibs-downloader
+    update_cache: yes
+- name: Enable mibs
+  ansible.builtin.replace:
+    path: /etc/snmp/snmp.conf
+    regexp: "^mibs :"
+    replace: "# mibs :"

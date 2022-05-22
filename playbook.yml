@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - network
+  tasks:
+    - name: Install utils
+      apt:
+        name:
+          - vim
+          - nano
+        state: latest
+        update_cache: yes
+        cache_valid_time: 3600
+- hosts: router
+  become: true
+  roles:
+    - routing
+    - dnsmasq
+- hosts: client
+  become: true
+  vars:
+    ldap_server: "10.2.2.2"
+  roles:
+    - ldap-client
+    - snmp
+- hosts: server
+  become: true
+  roles:
+    - ldap-server
+    - snmp-server

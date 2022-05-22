@@ -1,0 +1,61 @@
+---
+- name: Configure debconf option
+  ansible.builtin.debconf:
+    name: libnss-ldap
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items:
+    - { question: "shared/ldapns/ldap-server", value: "ldap://{{ ldap_server }}", vtype: "string" }
+    - { question: "shared/ldapns/ldap_version", value: "3", vtype: "select" }
+    - { question: "libnss-ldap/dbrootlogin", value: false , vtype: "boolean" }
+    - { question: "shared/ldapns/base-dn", value: "dc=labammsis", vtype: "string" }
+  notify: restart nscd
+- name: Configure libpam-ldap
+  ansible.builtin.debconf:
+    name: libpam-ldap
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  with_items:
+    - { question: "shared/ldapns/ldap-server", value: "ldap://{{ ldap_server }}", vtype: "string" }
+    - { question: "libpam-ldap/pam_password", value: "crypt", vtype: "select" }
+    - { question: "libpam-ldap/rootbinddn", value: "cn=admin,dc=labammsis", vtype: "string" }
+  register: libpam_config
+- name: Set pam password
+  ansible.builtin.debconf:
+    name: libpam-ldap
+    value: "gennaio.marzo"
+    question: "libpam-ldap/rootbindpw"
+    vtype: "password"
+  when: libpam_config.changed
+- name: Install client packages
+  ansible.builtin.apt:
+    name:
+      - libnss-ldap
+      - libpam-ldap
+      - ldap-utils
+    state: present
+    update_cache: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+- name: Configure nss
+  ansible.builtin.lineinfile:
+    dest: /etc/nsswitch.conf
+    regexp: '^{{ item.db }}:\s+'
+    line: '{{ item.db }}: files {{ item.more }} ldap'
+  with_items:
+    - { db: "passwd", more: "systemd" }
+    - { db: "group", more: "systemd" }
+    - { db: "shadow", more: "" }
+    - { db: "gshadow", more: "" }
+- name: Create ldap dir
+  ansible.builtin.file:
+    path: /etc/ldap/
+    state: directory
+- name: Configure pam
+  ansible.builtin.copy:
+    dest: /etc/ldap/ldap.conf
+    src: ldap.conf
+
+

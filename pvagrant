@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -z $1 ]]; then
+  echo "Missing vagrant argument"
+  exit 1
+fi
+
+grep config.vm.define Vagrantfile | awk -F'"' '{print $2}' | xargs -P3 -I {} vagrant $@ {}
