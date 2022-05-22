@@ -67,29 +67,3 @@ uidNumber: 2000
 ```bash
 ldapmodify -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -f change.ldiff
 ```
-
-  libnss-ldap/bindpw: (password omitted)
-  libnss-ldap/rootbindpw: (password omitted)
-* libnss-ldap/nsswitch:
-* shared/ldapns/ldap_version: 3
-  libnss-ldap/rootbinddn: cn=manager,dc=example,dc=net
-  libnss-ldap/override: true
-* libnss-ldap/dbrootlogin: false
-* libnss-ldap/confperm: false
-* shared/ldapns/ldap-server: ldap://10.2.2.2
-* shared/ldapns/base-dn: dc=labammsis
-* libnss-ldap/dblogin: false
-  libnss-ldap/binddn: cn=proxyuser,dc=example,dc=net
-
-  libnss-ldap/rootbindpw: (password omitted)
-  libnss-ldap/bindpw: (password omitted)
-  libnss-ldap/dbrootlogin: true
-  libnss-ldap/rootbinddn: cn=manager,dc=example,dc=net
-* shared/ldapns/base-dn: dc=labammsis
-  libnss-ldap/nsswitch:
-  libnss-ldap/dblogin: false
-  libnss-ldap/binddn: cn=proxyuser,dc=example,dc=net
-  libnss-ldap/override: true
-* shared/ldapns/ldap-server: ldap://10.2.2.2
-  libnss-ldap/confperm: false
-* shared/ldapns/ldap_version: 3
