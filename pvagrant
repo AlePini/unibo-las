@@ -5,4 +5,4 @@ if [[ -z $1 ]]; then
   exit 1
 fi
 
-grep config.vm.define Vagrantfile | awk -F'"' '{print $2}' | xargs -P3 -I {} vagrant $@ {}
+grep config.vm.define Vagrantfile | awk -F'"' '{print $2}' | xargs -P4 -I {} vagrant $@ {}
