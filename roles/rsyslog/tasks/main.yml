@@ -1,0 +1,9 @@
+---
+- name: Enable log reciving
+  ansible.builtin.lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - { regexp: '^#module\(load="imudp"\)', line: 'module(load="imudp")' }
+    - { regexp: '^#input\(type="imudp" port="514"\)$', line: 'input(type="imudp" port="514")' }
