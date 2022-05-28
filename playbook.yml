@@ -3,6 +3,7 @@
   become: true
   roles:
     - network
+    - ssh
   tasks:
     - name: Install utils
       apt:
@@ -12,20 +13,48 @@
         state: latest
         update_cache: yes
         cache_valid_time: 3600
+# router | snmp-server
 - hosts: router
   become: true
+  tasks:
+    - name: Enable ldap-error log
+      ansible.builtin.copy:
+        src: router/ldap-syslog
+        dest: /etc/rsyslog.d/ldap-error.conf
+      notify: restart rsyslog
+  handlers:
+    - name: restart rsyslog
+      service:
+        name: rsyslog
+        state: restarted
   roles:
+    - rsyslog
     - routing
     - dnsmasq
-- hosts: client
+    - snmp-server
+# server1 server2 | snmp-client ldap-client
+- hosts: server1,server2
   become: true
+  tasks:
+    - name: Copy ldap.sh
+      ansible.builtin.copy:
+        src: ldap.sh
+        dest: ldap.sh
+        mode: 0755
   vars:
-    ldap_server: "10.2.2.2"
+    ldap_server: "10.20.20.20"
   roles:
+    - snmp-client
     - ldap-client
-    - snmp
-- hosts: server
+# server1 | ldap-server
+- hosts: server1
   become: true
   roles:
     - ldap-server
-    - snmp-server
+# client | ldap-client
+- hosts: client
+  become: true
+  vars:
+    ldap_server: "10.20.20.20"
+  roles:
+    - ldap-client
