@@ -1,0 +1,14 @@
+---
+- name: Copy public keys
+  ansible.posix.authorized_key:
+    user: "vagrant"
+    key: "{{ lookup('file', 'ssh-config/id_rsa.pub') }}"
+    state: present
+- name: Copy private key
+  remote_user: vagrant
+  ansible.builtin.copy:
+    src: "ssh-config/id_rsa"
+    dest: "/home/vagrant/.ssh/id_rsa"
+    mode: 0600
+    owner: vagrant
+    group: vagrant
