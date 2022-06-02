@@ -8,7 +8,7 @@
   with_items:
     - { question: "shared/ldapns/ldap-server", value: "ldap://{{ ldap_server }}", vtype: "string" }
     - { question: "shared/ldapns/ldap_version", value: "3", vtype: "select" }
-    - { question: "libnss-ldap/dbrootlogin", value: false , vtype: "boolean" }
+    - { question: "libnss-ldap/dbrootlogin", value: 'false' , vtype: "boolean" }
     - { question: "shared/ldapns/base-dn", value: "dc=labammsis", vtype: "string" }
   notify: restart nscd
 - name: Configure libpam-ldap
