@@ -1,5 +1,0 @@
-auto eth1
-iface eth1 inet dhcp
-# address 10.1.1.1
-# netmask 255.255.255.0
-# up /usr/sbin/ip route add 10.2.2.0/24 via 10.1.1.254
