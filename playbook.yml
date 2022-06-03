@@ -15,30 +15,27 @@
         update_cache: yes
         cache_valid_time: 3600
 # controller
-- hosts: router
+- hosts: controller
   become: true
   tasks:
     - name: Copy files
       ansible.builtin.copy:
         src: "managedump.sh"
         dest: "~/"
-        mode: '0755'
+        mode: "0755"
   roles:
     - rsyslog
     - dnsmasq
     - snmp-client
+    - ssh
 # agent
 - hosts: agent1,agent2
   become: true
-  tasks:
-    - name: Copy files
-      ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: "~/"
-        mode: '0755'
-      with_items:
-        - "createdump.sh"
-        - "deletedump.sh"
   roles:
     - snmp-server
     - rsyslog
+    - ssh
+- name: Import agent playbook
+  ansible.builtin.import_playbook: "agent.yml"
+- name: Import controller playbook
+  ansible.builtin.import_playbook: "controller.yml"
