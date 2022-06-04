@@ -36,7 +36,6 @@
       - libpam-ldap
       - ldap-utils
     state: present
-    update_cache: yes
   environment:
     DEBIAN_FRONTEND: noninteractive
 - name: Configure nss
