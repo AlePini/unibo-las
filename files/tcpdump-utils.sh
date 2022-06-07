@@ -36,3 +36,16 @@ function parse-icmp() {
     echo "${SIP} $DIR ${DIP} - ${RESTO}"
   done
 }
+
+## source ip
+src net 10.10.10.0/24 | src host 10.10.10.101
+# destination ip
+dest net 10.10.10.0/24 | dest host 10.10.10.101
+# source port
+src port 22
+# destination port
+dst port 22
+# start connection
+'( tcp[tcpflags] & (tcp-syn|tcp-fin) != 0 )'
+# packet count
+-c $NUM
