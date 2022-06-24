@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "debian/bullseye64"
+  config.vm.box = "las/bullseye64"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider "virtualbox" do |vb|
@@ -23,11 +23,11 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "agent1" do |agent1|
     agent1.vm.hostname = "agent1"
-    agent1.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false, mac: "0800270ca52a"
+    agent1.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false #, mac: "0800270ca52a"
   end
 
   config.vm.define "agent2" do |agent2|
     agent2.vm.hostname = "agent2"
-    agent2.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false, mac: "0800270ca52b"
+    agent2.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false #, mac: "0800270ca52b"
   end
 end
