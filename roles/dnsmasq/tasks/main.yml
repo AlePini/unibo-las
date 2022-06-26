@@ -2,13 +2,8 @@
   apt:
     name: dnsmasq
     state: present
-- name: Add static entry for server to /etc/hosts
-  ansible.builtin.lineinfile:
-    path: "/etc/hosts"
-    line: "10.2.2.2 server"
-    state: present
 - name: Copy dnsmasq configuration file
   copy:
-    src: "{{ inventory_hostname }}/dnsmasq/"
+    src: "{{ inventory_hostname }}/dnsmasq/dnsmasq.conf"
     dest: /etc/dnsmasq.d/
   notify: restart dnsmasq

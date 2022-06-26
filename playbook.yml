@@ -1,41 +1,47 @@
 ---
 - hosts: all
   become: true
-  roles:
+  roles: 
     - network
-    - ssh
   tasks:
     - name: Install utils
       apt:
         name:
           - vim
-          - nano
           - tcpdump
         state: latest
         update_cache: yes
         cache_valid_time: 3600
-# controller
-- hosts: controller
+
+# MANAGER
+- hosts: router
   become: true
-  tasks:
-    - name: Copy files
-      ansible.builtin.copy:
-        src: "managedump.sh"
-        dest: "~/"
-        mode: "0755"
   roles:
-    - rsyslog
     - dnsmasq
-    - snmp-client
-    - ssh
-# agent
-- hosts: agent1,agent2
+    - routing
+    - ldap-server
+#    - rsyslog
+#    - snmp-client
+
+#  Workstations
+- hosts: client
   become: true
+  vars:
+    - ldap_server: "10.100.1.1"
   roles:
-    - snmp-server
-    - rsyslog
-    - ssh
-- name: Import agent playbook
-  ansible.builtin.import_playbook: "agent.yml"
-- name: Import controller playbook
-  ansible.builtin.import_playbook: "controller.yml"
+    - ldap-client
+#    - snmp-server
+
+- hosts: server
+  become: true
+  vars:
+    - ldap_server: "10.200.1.254"
+  roles:
+    - ldap-client
+
+
+#- name: Import manager playbook
+#  ansible.builtin.import_playbook: "manager.yml"
+#- name: Import workstation playbook
+#  ansible.builtin.import_playbook: "workstation.yml"
+

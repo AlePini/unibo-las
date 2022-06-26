@@ -31,3 +31,16 @@
     state: present
   environment:
     DEBIAN_FRONTEND: noninteractive
+
+- name: copy files ldif to server
+  ansible.builtin.copy:
+    src: "{{ item  }}"
+    dest: "/etc/ldap/schema/"
+    owner: "root"
+    mode : "0644"
+  with_fileglob: "files/*.ldif"
+
+- name: Add entries to ldap directory
+  ansible.builtin.shell:
+    cmd: "ldapadd -x -D 'cn=admin,dc=labammsis' -w 'gennaio.marzo' -H ldap:/// -f {{ item }}"
+  with_fileglob: "files/*.ldif"

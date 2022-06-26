@@ -27,9 +27,21 @@
     line: "rwcommunity supercom default -V all"
     insertafter: "^rocommunity"
   notify: restart snmpd
-- name: Set sysLocation
-  ansible.builtin.lineinfile:
-    dest: /etc/snmp/snmpd.conf
-    line: "sysLocation vagrant_{{ inventory_hostname }}"
-    regexp: "^sysLocation"
-  notify: restart snmpd
+
+#- name: Add script for snmp agent
+#  ansible.builtin.lineinfile:
+#    dest: /etc/snmp/snmpd.conf
+#    line: "{{ item }}"
+#  with_items:
+#    - "extend-sh processes /usr/bin/ps -aux | /usr/bin/wc -l"
+#  notify: restart snmpd
+
+#- name: Edit sudoers
+#    ansible.builtin.lineinfile:
+#      dest: "/etc/sudoers"
+#      line: "Debian-snmp ALL=NOPASSWD:{{ item }}"
+#      validate: '/usr/sbin/visudo -cf %s'
+#    with_items:
+#      - "/root/createdump"
+#      - "/root/deletedump"
+

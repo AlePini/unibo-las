@@ -7,8 +7,8 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 512
-    vb.cpus = 2
+#    vb.memory = 512
+#    vb.cpus = 2
     vb.linked_clone = true
   end
 
@@ -16,18 +16,27 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbook.yml"
   end
 
-  config.vm.define "controller" do |controller|
-    controller.vm.hostname = "controller"
-    controller.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false
+  config.vm.define "server" do |server|
+    server.vm.hostname = "server"
+    server.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false
+#    server.vm.network "private_network",
+#      virtualbox__intnet: "LAN2",
+#      type: "dhcp"
+
   end
 
-  config.vm.define "agent1" do |agent1|
-    agent1.vm.hostname = "agent1"
-    agent1.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false #, mac: "0800270ca52a"
+  config.vm.define "client" do |client|
+    client.vm.hostname = "client"
+    client.vm.network "private_network", virtualbox__intnet: "LAN1", auto_config: false
+   # client.vm.network "private_network",
+   # virtualbox__intnet: "LAN1", type: "dhcp"
+     #, mac: "0800270ca52a"
   end
 
-  config.vm.define "agent2" do |agent2|
-    agent2.vm.hostname = "agent2"
-    agent2.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false #, mac: "0800270ca52b"
+  config.vm.define "router" do |router|
+    router.vm.hostname = "router"
+    router.vm.network "private_network", virtualbox__intnet: "LAN1", auto_config: false
+    router.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false
+    #, mac: "0800270ca52b"
   end
 end
