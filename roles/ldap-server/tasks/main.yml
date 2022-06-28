@@ -42,5 +42,6 @@
 
 - name: Add entries to ldap directory
   ansible.builtin.shell:
-    cmd: "ldapadd -x -D 'cn=admin,dc=labammsis' -w 'gennaio.marzo' -H ldap:/// -f {{ item }}"
+    cmd: "ldapadd -x -D 'cn=admin,dc=labammsis' -w 'gennaio.marzo' -H
+    ldap:/// -f /etc/ldap/schema/{{ item | basename}}"
   with_fileglob: "files/*.ldif"

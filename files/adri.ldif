@@ -1,0 +1,16 @@
+dn: uid=adri,ou=People,dc=labammsis
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+givenName: Adriano
+cn: adriano
+sn: void
+mail: adri.void@unibo.it
+uid: adri
+uidNumber: 10000
+gidNumber: 10000
+homeDirectory: /home/adri
+loginShell: /bin/bash
+gecos: User 
+userPassword: {crypt}x

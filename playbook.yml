@@ -19,25 +19,25 @@
   roles:
     - dnsmasq
     - routing
-    - ldap-server
+#    - ldap-server
 #    - rsyslog
 #    - snmp-client
 
 #  Workstations
 - hosts: client
   become: true
-  vars:
-    - ldap_server: "10.100.1.1"
+#  vars:
+#    - ldap_server: ""
   roles:
-    - ldap-client
+#    - ldap-client
 #    - snmp-server
 
 - hosts: server
   become: true
-  vars:
-    - ldap_server: "10.200.1.254"
+#  vars:
+#    - ldap_server: ""
   roles:
-    - ldap-client
+#    - ldap-client
 
 
 #- name: Import manager playbook

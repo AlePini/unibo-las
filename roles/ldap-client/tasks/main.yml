@@ -53,11 +53,11 @@
     path: /etc/ldap/
     state: directory
 
-- name: Configure pam
-  ansible.builtin.copy:
-    dest: /etc/ldap/ldap.conf
-    src: ldap.conf
-  notify: restart nscd
+#- name: Configure pam
+#  ansible.builtin.copy:
+#    dest: /etc/ldap/ldap.conf
+#    src: ldap.conf
+#  notify: restart nscd
 
 - name: Create home directory for ldap users
   ansible.builtin.lineinfile:
