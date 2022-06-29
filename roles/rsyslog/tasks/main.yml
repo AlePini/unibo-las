@@ -10,7 +10,8 @@
 
 - name: Add custom logging
   ansible.builtin.copy:
-    src: "files/{{ inventory_hostname }}/rsyslog/myconf.conf"
+    src: "{{ item  }}"
     dest: "/etc/rsyslog.d/"
+  with_fileglob: "files/{{ inventory_hostname }}/rsyslog/*.conf"
   notify: restart rsyslog
 
