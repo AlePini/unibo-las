@@ -7,9 +7,10 @@
   with_items:
     - { regexp: '^#module\(load="imudp"\)', line: 'module(load="imudp")' }
     - { regexp: '^#input\(type="imudp" port="514"\)$', line: 'input(type="imudp" port="514")' }
-- name: Copy custom conf
+
+- name: Add custom logging
   ansible.builtin.copy:
-    src: "files/{{ inventory_hostname }}/rsyslog/*.conf"
-    dest: /etc/rsyslog.d/
+    src: "files/{{ inventory_hostname }}/rsyslog/myconf.conf"
+    dest: "/etc/rsyslog.d/"
   notify: restart rsyslog
 
