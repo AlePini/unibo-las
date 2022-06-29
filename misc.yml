@@ -17,10 +17,12 @@
     src: "files/createuser.service"
     dest: "/etc/systemd/system/"
     mode: "755"
+
 - name: Make sure a service unit is running
   ansible.builtin.systemd:
     state: started
     name: createuser
+
 - name: Enable service httpd and ensure it is not masked
   ansible.builtin.systemd:
     name: createuser
@@ -31,7 +33,7 @@
 - name: schedule backup
   ansible.builtin.cron:
     name: "Monitor"
-    owner: root
+    user: root
     minute: "*/5"
     job: "/usr/bin/monitor.sh"
 

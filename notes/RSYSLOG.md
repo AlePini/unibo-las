@@ -31,7 +31,7 @@ Fa in modo che al boot venga fatto partire
 
 ```bash
 [Install]
-Wanted-by=basic.target
+WantedBy=basic.target
 ```
 
 Restart on failure
