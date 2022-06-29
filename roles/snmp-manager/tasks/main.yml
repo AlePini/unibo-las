@@ -9,6 +9,7 @@
     name:
       - snmp
       - snmp-mibs-downloader
+    update_cache: yes
 - name: Enable mibs
   ansible.builtin.replace:
     path: /etc/snmp/snmp.conf
