@@ -1,3 +1,6 @@
+#snmpget
+snmpget -v 1 -c public $IP NET-SNMP-EXTEND-MIB::nsExtendOutputFull.\"sshd\"
+
 # snmpwalk
 ```bash
 snmpwalk -v 1 -c public 10.2.2.2 .1.3.6.1.4.1.2021.2
