@@ -21,7 +21,7 @@
     - routing
 #    - ldap-server
 #    - rsyslog
-#    - snmp-client
+#    - snmp-manager
 
 #  Workstations
 - hosts: client
@@ -30,7 +30,7 @@
 #    - ldap_server: ""
   roles:
 #    - ldap-client
-#    - snmp-server
+#    - snmp-agent
 
 - hosts: server
   become: true

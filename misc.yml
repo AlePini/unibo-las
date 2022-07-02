@@ -1,7 +1,7 @@
 #Copiare script dentro la folder /usr/bin
 - name: copy scripts
   ansible.builtin.copy:
-    src: "files/{{ item }}.sh"
+    src: "files/{{ item }}.sh" #attenzione aggiungere cartella precisa
     dest: "/usr/bin/"
     mode: "766"
 # owner: "root"
@@ -14,7 +14,7 @@
 
 - name: copy unit
   ansible.builtin.copy:
-    src: "files/createuser.service"
+    src: "files/createuser.service" #aggiungere cartella precisa
     dest: "/etc/systemd/system/"
     mode: "755"
 
