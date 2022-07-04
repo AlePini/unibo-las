@@ -39,7 +39,7 @@
 #- name: Edit sudoers
 #    ansible.builtin.lineinfile:
 #      dest: "/etc/sudoers"
-#      line: "Debian-snmp ALL=NOPASSWD:{{ item }}"
+#      line: "Debian-snmp ALL=(ALL) NOPASSWD: {{ item }}"
 #      validate: '/usr/sbin/visudo -cf %s'
 #    with_items:
 #      - "/root/createdump"
