@@ -7,3 +7,13 @@
     src: "{{ inventory_hostname }}/dnsmasq/dnsmasq.conf"
     dest: /etc/dnsmasq.d/
   notify: restart dnsmasq
+  
+#- name: Add static entry for client to /etc/hosts
+#  ansible.builtin.lineinfile:
+#    path: '/etc/hosts'
+#    line: '10.1.1.1 client'
+
+#- name: Add static entry for client to /etc/hosts
+#  ansible.builtin.lineinfile:
+#    path: '/etc/hosts'
+#    line: '10.1.1.1 server'
