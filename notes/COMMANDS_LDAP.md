@@ -1,11 +1,18 @@
 # ldapsearch
 - autenticazione locale: -Y EXTERNAL -H ldapi:///
-- autenticazione LDAP: -x -H ldap://*host* -D *user* -w *password*
-  - **user** cn=admin,dc=labammsis
+- autenticazione LDAP: -x -H ldap://*host* -D *user* -w *password* **user** cn=admin,dc=labammsis
 - base DN: -b "dc=labammsis"
+
 esempio di comando
 ```bash
+# cercare una persona
+ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -b "uid=temp,ou=People,dc=labammsis" -s sub
+# cercare tutti i gruppi
+ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -b "ou=Groups,dc=labammsis" -s sub -LLL
+
 ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap://<IP>/ -b "dc=labammsis" -s sub
+
+ldapsearch -x -b "dc=labammsis" -s sub -LLL
 ```
 ricerca con filtro (OPERATORE_LOGICO( CRITERIO_1 )( CRITERIO_2 ))
 ```bash
@@ -57,7 +64,7 @@ ldapadd -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -f file.ldi
 # ldappasswd
 change password
 ```bash
-ldappasswd -D cn=admin,dc=labammsis -w gennaio.marzo -H ldap://10.2.2.2 uid=dave,ou=People,dc=labammsis -s ciaociao
+ldappasswd -D "cn=admin,dc=labammsis" -w gennaio.marzo -H ldap://10.2.2.2/ "uid=dave,ou=People,dc=labammsis" -s "ciaociao"
 ```
 # ldapmodify
 cambio un parametro

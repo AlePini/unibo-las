@@ -6,11 +6,11 @@ Vagrant.configure("2") do |config|
   config.vm.box = "las/bullseye64"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  config.vm.provider "virtualbox" do |vb|
+#  config.vm.provider "virtualbox" do |vb|
 #    vb.memory = 512
 #    vb.cpus = 2
-    vb.linked_clone = true
-  end
+#    vb.linked_clone = true
+#  end
 
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "playbook.yml"
