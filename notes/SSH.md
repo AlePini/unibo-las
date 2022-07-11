@@ -19,7 +19,7 @@ ssh-keygen -t rsa -b 2048
 # Una volta generate le chiavi in files/keys/ facciamo questo
 
 IPOTIZZANDO DI VOLER CONNETTERSI DA CLIENT A SERVER
-
+# ATTENZIONE prima è meglio loggare come temp tramite ldap su client
 # Dentro al client mettiamo la chiave privata usando questi script ansible cambiando "temp" con l'utente necessario
 
 - name: Check for directory
@@ -59,22 +59,22 @@ Host server
 # Dentro al server mettiamo la chiave pubblica con questi script cambiando "temp" con l'utente necessario
 
 
-    - name: Check for directory
-      ansible.builtin.file:
-        path:  "{{ item }}"
-        mode: 0700
-        group: temp
-        owner: temp
-        state: directory
-      with_items:
-       - "/home/temp/"
-       - "/home/temp/.ssh"
+- name: Check for directory
+  ansible.builtin.file:
+    path:  "{{ item }}"
+    mode: 0700
+    group: temp
+    owner: temp
+    state: directory
+  with_items:
+   - "/home/temp/"
+   - "/home/temp/.ssh"
 
-    - name: update public keys
-      ansible.posix.authorized_key:
-        user: temp
-        state: present
-        key: "{{ lookup('file', 'files/keys/id_rsa.pub' ) }}"
+- name: update public keys
+  ansible.posix.authorized_key:
+    user: temp
+    state: present
+    key: "{{ lookup('file', 'files/keys/id_rsa.pub' ) }}"
 
 
 #Alla fine basta fare ssh temp@ip

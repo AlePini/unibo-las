@@ -89,7 +89,14 @@ tcpdump net 1.2.3.0/24
 tcpdump src net 1.2.3.0/24 and dst net 1.2.4.0/24
 ```
 
-Attenzione mettendo any catturiamo 2 volte il pacchetto, quando entra e quando esce 
+## Inizio e fine connessioni tcp
+
+```bash
+sudo tcpdump -vnl -i any src net 10.1.1.0/24 and dst net 10.2.2.0/24 and dst port 22 and  'tcp[tcpflags] & (tcp-syn|tcp-fin) != 0'
+```
+
+
+#Attenzione mettendo any catturiamo 2 volte il pacchetto, quando entra e quando esce 
 
 # SS
 
@@ -139,8 +146,3 @@ Mostra NON HUMAN READABLE quindi con i **numeri** al posto delle **parole** i no
 ss -n
 ```
 
-## Inizio e fine connessioni tcp
-
-```bash
-sudo tcpdump -vnl -i any src net 10.1.1.0/24 and dst net 10.2.2.0/24 and dst port 22 and  'tcp[tcpflags] & (tcp-syn|tcp-fin) != 0'
-```

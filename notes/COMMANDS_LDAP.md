@@ -9,9 +9,9 @@ esempio di comando
 ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -b "uid=temp,ou=People,dc=labammsis" -s sub
 # cercare tutti i gruppi
 ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap:/// -b "ou=Groups,dc=labammsis" -s sub -LLL
-
+#cercare dalla base
 ldapsearch -x -D "cn=admin,dc=labammsis" -w "gennaio.marzo" -H ldap://<IP>/ -b "dc=labammsis" -s sub
-
+#cercare dalla base in caso la directory ldap fosse su questo host
 ldapsearch -x -b "dc=labammsis" -s sub -LLL
 ```
 ricerca con filtro (OPERATORE_LOGICO( CRITERIO_1 )( CRITERIO_2 ))
@@ -20,7 +20,7 @@ ldapsearch -Y EXTERNAL -H ldapi:/// -b "dc=labammsis" "(&(objectClass=*)(uid=dav
 ```
 ## create ldiff
 ```bash
-ldapsearch −x −LLL −D cn=admin,dc=labammsis −b ou=People,dc=labammsis -s one −w gennaio.marzo −H ldapi:///
+ldapsearch −x −LLL −D "cn=admin,dc=labammsis" −b "ou=People,dc=labammsis" -s one −w "gennaio.marzo" −H ldapi:///
 ```
 # ldappadd
 add OU

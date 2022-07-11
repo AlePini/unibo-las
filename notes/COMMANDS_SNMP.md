@@ -1,5 +1,8 @@
 #snmpget
-snmpget -v 1 -c public $IP NET-SNMP-EXTEND-MIB::nsExtendOutputFull.\"sshd\"
+
+``` bash
+snmpget -v 1 -c public <IP> NET-SNMP-EXTEND-MIB::nsExtendOutputFull.\"process-name\"
+```
 
 # snmpwalk
 ```bash
