@@ -1,0 +1,6 @@
+auto eth1
+iface eth1 inet dhcp
+# static
+#     address 
+#     netmask 255.255.255.0
+#     up /usr/sbin/ip r add  via

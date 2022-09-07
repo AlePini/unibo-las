@@ -7,41 +7,42 @@
     - name: Install utils
       apt:
         name:
-          - vim
+          - neovim
           - tcpdump
         state: latest
         update_cache: yes
         cache_valid_time: 3600
 
-# MANAGER
-- hosts: router
+# Router
+- hosts: ROU
   become: true
   roles:
     - dnsmasq
     - routing
-#    - ldap-server
-#    - rsyslog
+    - ldap-server
+    - rsyslog
 #    - snmp-manager
 
-#  Workstations
-- hosts: client
+  tasks:
+    - name: Import router plabook
+      ansible.builtin.import_playbook: "rou.yml"
+
+#  Clients
+- hosts: CL1
+  become: true
+  vars:
+    - ldap_server: "10.30.128.1"
+  roles:
+    - ldap-client
+    - snmp-agent
+  tasks:
+    - name: Import client playbook
+      ansible.builtin.import_playbook: "cli.yml"
+
+# Server
+- hosts: SER
   become: true
 #  vars:
 #    - ldap_server: ""
   roles:
-#    - ldap-client
-#    - snmp-agent
-
-- hosts: server
-  become: true
-#  vars:
-#    - ldap_server: ""
-  roles:
-#    - ldap-client
-
-
-#- name: Import manager playbook
-#  ansible.builtin.import_playbook: "manager.yml"
-#- name: Import workstation playbook
-#  ansible.builtin.import_playbook: "workstation.yml"
-
+    - rsyslog

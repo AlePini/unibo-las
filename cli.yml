@@ -1,0 +1,11 @@
+#Copiare script dentro la folder /usr/bin
+- name: copy scripts
+  ansible.builtin.copy:
+    src: "files/{{ item }}.sh" #attenzione aggiungere cartella precisa
+    dest: "/usr/bin/"
+    mode: "766"
+# owner: "root"
+#    group: "root"
+  with_items:
+    - homedir
+    - init

@@ -1,5 +1,0 @@
-dn: cn=adri,ou=Groups,dc=labammsis
-objectClass: top
-objectClass: posixGroup
-cn: adri
-gidNumber: 10000

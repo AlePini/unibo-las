@@ -1,4 +1,4 @@
 auto eth2
 iface eth2 inet static
-    address 
+    address 192.168.111.254
     netmask 255.255.255.0

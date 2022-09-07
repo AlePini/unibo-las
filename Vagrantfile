@@ -16,27 +16,24 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "playbook.yml"
   end
 
-  config.vm.define "server" do |server|
-    server.vm.hostname = "server"
-    server.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false
-#    server.vm.network "private_network",
-#      virtualbox__intnet: "LAN2",
-#      type: "dhcp"
+  config.vm.define "SER" do |ser|
+    ser.vm.hostname = "SER"
+    # ser.vm.network "private_network", virtualbox__intnet: "NET2", auto_config: false
+    ser.vm.network "private_network", virtualbox__intnet: "NET2", type: "dhcp"
 
   end
 
-  config.vm.define "client" do |client|
-    client.vm.hostname = "client"
-    client.vm.network "private_network", virtualbox__intnet: "LAN1", auto_config: false
-   # client.vm.network "private_network",
-   # virtualbox__intnet: "LAN1", type: "dhcp"
+  config.vm.define "CL1" do |cl1|
+    cl1.vm.hostname = "CL1"
+  # cl1.vm.network "private_network", virtualbox__intnet: "NET1", auto_config: false
+    cl1.vm.network "private_network", virtualbox__intnet: "NET1", type: "dhcp"
      #, mac: "0800270ca52a"
   end
 
-  config.vm.define "router" do |router|
-    router.vm.hostname = "router"
-    router.vm.network "private_network", virtualbox__intnet: "LAN1", auto_config: false
-    router.vm.network "private_network", virtualbox__intnet: "LAN2", auto_config: false
+  config.vm.define "ROU" do |rou|
+    rou.vm.hostname = "ROU"
+    rou.vm.network "private_network", virtualbox__intnet: "NET1", auto_config: false
+    rou.vm.network "private_network", virtualbox__intnet: "NET2", auto_config: false
     #, mac: "0800270ca52b"
   end
 end
